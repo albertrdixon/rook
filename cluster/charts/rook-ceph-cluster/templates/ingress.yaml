@@ -14,6 +14,8 @@ metadata:
   annotations: {{- toYaml .Values.ingress.dashboard.annotations | nindent 4 }}
   {{- end }}
 spec:
+{{- with .Values.ingress.dashboard.ingressClassName }}
+  ingressClassName: {{ . }}{{ end }}
   rules:
     - host: {{ .Values.ingress.dashboard.host.name }}
       http:
