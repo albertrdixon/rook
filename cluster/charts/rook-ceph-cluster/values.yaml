@@ -299,6 +299,7 @@ cephClusterSpec:
 
 ingress:
   dashboard: {}
+    # ingressClassName: nginx
     # annotations:
     #   kubernetes.io/ingress.class: nginx
     #   external-dns.alpha.kubernetes.io/hostname: example.com
