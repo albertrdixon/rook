@@ -726,8 +726,16 @@ func validateCSIVersion(clientset kubernetes.Interface, namespace, rookImage, se
 	job := versionReporter.Job()
 	job.Spec.Template.Spec.ServiceAccountName = serviceAccountName
 
+<<<<<<< HEAD
 	// Apply csi provisioner toleration for csi version check job
 	job.Spec.Template.Spec.Tolerations = getToleration(clientset, provisionerTolerationsEnv, []corev1.Toleration{})
+=======
+	// Apply csi provisioner toleration and affinity for csi version check job
+	job.Spec.Template.Spec.Tolerations = getToleration(r.opConfig.Parameters, provisionerTolerationsEnv, []corev1.Toleration{})
+	job.Spec.Template.Spec.Affinity = &corev1.Affinity{
+		NodeAffinity: getNodeAffinity(r.opConfig.Parameters, provisionerNodeAffinityEnv, &corev1.NodeAffinity{}),
+	}
+>>>>>>> c1ef189b9 (ceph: apply csi provisioner node-affinity to csi version check job)
 	stdout, _, retcode, err := versionReporter.Run(timeout)
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to complete ceph CSI version job")
